@@ -1,0 +1,27 @@
+{
+  "name": "chatproject",
+  "version": "1.0.0",
+  "description": "chat de telegram",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Eduardoasm/chatProject.git"
+  },
+  "keywords": [
+    "chat",
+    "telegram",
+    "node"
+  ],
+  "author": "Eduardo Sequeira",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Eduardoasm/chatProject/issues"
+  },
+  "homepage": "https://github.com/Eduardoasm/chatProject#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
