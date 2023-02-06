@@ -1,12 +1,15 @@
 const express = require('express');
-const router = express.Router();
+const bodyParser = require('body-parser')
+const router = require('./network/routes')
+
+
+
 const app = express();
+app.use(bodyParser.json())
+// app.use(router);
+router(app)
 
-app.use(router);
-
-router.get('/', function(req, res) {
-    res.send('soy ruta get')
-})
+app.use('/app', express.static('public'));
 
 app.listen(3000)
 
