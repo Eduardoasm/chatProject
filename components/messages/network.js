@@ -1,24 +1,28 @@
 const express = require('express')
 const router = express.Router()
 const response = require('../../network/response')
+const controller = require('./controller');
 
 router.get('/', function(req, res) {
-    console.log(req.headers)
-    res.header({
-        "custom-headers": "Nuestro valor personalizado",
+    controller.getMessages()
+    .then((messageList) => {
+        response.success(req, res, messageList, 200)
     })
-    // res.send('soy ruta get')
-    response.success(req, res, 'Lista de mensajes');
+    .catch(e => {
+        response.error(req, res, 'Unexpected error', 500, e)
+    })
 })
  
 router.post('/', function(req, res){
-    console.log(req.body)
-    console.log(req.query)
-    if(req.query.error == "ok"){
-        response.error(req, res, "error inesperado", 500, 'Es solo una simulacion de los errores')
-    }
 
-    response.success(req, res, 'Creado correctamente', 200)
+    controller.addMessage(req.body.user, req.body.message)
+    .then((fullMessage) => {
+        response.success(req, res, fullMessage , 201)
+    })
+    .catch(e => {
+        response.error(req, res, 'Inrofmarion invalida', 400, 'Error en el controlador')
+    })
+
 })
 
 module.exports = router

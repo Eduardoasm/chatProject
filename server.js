@@ -6,7 +6,7 @@ const router = require('./network/routes')
 
 const app = express();
 app.use(bodyParser.json())
-// app.use(router);
+// app.use(router); 
 router(app)
 
 app.use('/app', express.static('public'));
