@@ -1,11 +1,22 @@
-const list = [];
+const db = require('mongoose');
+const Model = require('./model')
+require('dotenv').config()
+
+db.promise = global.Promise;
+db.connect(process.env.DATABASE, {
+    useNewUrlParser: true
+})
+
+console.log('[db], Conectada con exito')
 
 function addMessage(message) {
-    list.push(message);
+    const MyMessage = new Model(message)
+    MyMessage.save()
 }
 
-function getMessage() {
-    return list;
+async function getMessage() {
+    const messages = await Model.find()
+    return messages
 }
 
 module.exports = {
