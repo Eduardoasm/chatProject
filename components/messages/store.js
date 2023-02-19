@@ -1,26 +1,40 @@
-const db = require('mongoose');
 const Model = require('./model')
-require('dotenv').config()
-
-db.promise = global.Promise;
-db.connect(process.env.DATABASE, {
-    useNewUrlParser: true
-})
-
-console.log('[db], Conectada con exito')
 
 function addMessage(message) {
     const MyMessage = new Model(message)
     MyMessage.save()
 }
 
-async function getMessage() {
-    const messages = await Model.find()
+async function getMessage(filterUser) {
+    let filter = {};
+    if (filterUser !== null) {
+        filter = {user: filterUser}
+    }
+    const messages = await Model.find(filter)
     return messages
+}
+
+async function updateText(id, message) {
+    const foundMessage = await Model.findOne({
+        _id: id,
+    })
+
+    foundMessage.message = message
+
+    const newMessage = await foundMessage.save();
+
+    return newMessage;
+}
+
+async function deleteMessage(id) {
+    const deleteMessages = await Model.deleteOne(id)
+
+    return deleteMessages
 }
 
 module.exports = {
     add: addMessage,
     list: getMessage,
-    // 
+    updateText,
+    deleteMessage,
 }
